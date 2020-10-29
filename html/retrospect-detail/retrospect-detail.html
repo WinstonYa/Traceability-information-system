@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>农产品追溯信息系统</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <link rel="stylesheet" href="../../assets/element/index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="banner"></div>
+
+      <div class="title-container">
+        <img class="system-logo" src="https://cn.vuejs.org/images/logo.png" alt="img" />
+        <h1 class="system-title">监利市农产品质量安全追溯信息系统</h1>
+        <div class="search-section">
+          <input class="search-input" type="text" placeholder="请输入搜索内容..." />
+          <button class="search-btn">搜索</button>
+        </div>
+      </div>
+
+      <div class="mainer">
+        <div class="nav-list">
+          <a class="nav-item" href="../../index.html">首页</a>
+          <a class="nav-item" href="../farm-news/farm-news.html">农业新闻</a>
+          <a class="nav-item" href="../laws-regulations/laws-regulations.html">政策法规</a>
+          <a class="nav-item" href="../work-trend/work-trend.html">工作动态</a>
+          <a class="nav-item" href="../farm-products/farm-products.html">特色农产品</a>
+          <a class="nav-item" href="../company-show/company-show.html">企业名录</a>
+          <a class="nav-item" href="../supervision-admin/supervision-admin.html">监督管理</a>
+          <a class="nav-item" href="../supervision-organ/supervision-organ.html">监督机构</a>
+          <a class="nav-item" href="../suggest/suggest.html">投诉建议</a>
+        </div>
+
+        <!---------------------------------------------------------------- -->
+
+        <div class="retrospect-content">
+          <div class="retrospect-top">
+            <div class="retrospect-title">
+              <span class="retrospect-title-ch">追溯码查询</span>
+              <span class="retrospect-title-en">/ Trace Code Query Information</span>
+            </div>
+            <div class="retrospect-nav">
+              <span class="retrospect-nav-text">您现在的位置：首页 > 追溯码查询信息</span>
+            </div>
+          </div>
+          <div class="product-retrospect-section">
+            <div class="product-retrospect-code">追溯码：{{code}}</div>
+            <div class="product-retrospect-info">
+              <div class="product-retrospect-info-img">
+                <img src="../../images/a1.jpg" alt="" />
+              </div>
+              <div class="product-retrospect-info-text">
+                <p><b>产品名称：</b> {{aqzsDetail.name}}</p>
+                <p><b>产品类型：</b> {{aqzsDetail.type}}</p>
+                <p><b>产品用途：</b> {{aqzsDetail.purpose}}</p>
+                <p><b>产品保质期：</b> {{aqzsDetail.shelfLife}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="product-retrospect-tabs">
+            <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+              <el-tab-pane label="产品信息" name="1">
+                <p class="product-info-item">产品名称: {{aqzsDetail.name}}</p>
+                <p class="product-info-item">商品保质期: {{aqzsDetail.shelfLife}}</p>
+                <p class="product-info-item">结束时间: {{aqzsProduct.endDate}}</p>
+                <p class="product-info-item">商品条码: {{aqzsDetail.code}}</p>
+                <p class="product-info-item">商品规格: {{aqzsDetail.specs}}</p>
+                <p
+                  class="product-info-item"
+                  style="
+                    height: 150px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                  "
+                >
+                  商品介绍: {{aqzsDetail.introduce}}
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  产品图片:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl"
+                    :src="item.url"
+                    :preview-src-list="srcList"
+                  >
+                  </el-image>
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  产品证书:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in certificateUrl"
+                    :src="item.url"
+                    :preview-src-list="certificateList"
+                  >
+                  </el-image>
+                </p>
+              </el-tab-pane>
+              <el-tab-pane label="基地信息" name="2">
+                <p class="product-info-item">种植基地名称:: {{aqzs_base1.name}}</p>
+                <p class="product-info-item">种植基地位置: {{aqzs_base1.address}}</p>
+                <p class="product-info-item">种植基地面积/规模(亩): {{aqzs_base1.area}}</p>
+                <p class="product-info-item">种植环境检验结果: {{aqzs_base1.isReportQualified}}</p>
+                <p class="product-info-item">种植基地负责人: {{aqzs_base1.lender}}</p>
+                <p class="product-info-item">种植基地负责人电话: {{aqzs_base1.lenderPhone}}</p>
+                <p class="product-info-item">生产基地名称: {{aqzs_base2.name}}</p>
+                <p class="product-info-item">生产基地位置: {{aqzs_base2.address}}</p>
+                <p class="product-info-item">生产基地面积/规模(亩): {{aqzs_base2.area}}</p>
+                <p class="product-info-item">生产基地检验结果: {{aqzs_base2.isReportQualified}}</p>
+                <p class="product-info-item">生产基地负责人: {{aqzs_base2.lender}}</p>
+                <p class="product-info-item">生产基地负责人电话: {{aqzs_base2.lenderPhone}}</p>
+                <p class="product-info-item" style="height: 200px">
+                  种植基地照片:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl2"
+                    :src="item.url"
+                    :preview-src-list="srcList2"
+                  >
+                  </el-image>
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  生产基地照片:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl4"
+                    :src="item.url"
+                    :preview-src-list="srcList4"
+                  >
+                  </el-image>
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  种植基地检验报告:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl3"
+                    :src="item.url"
+                    :preview-src-list="srcList3"
+                  >
+                  </el-image>
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  生产基地检验报告:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl5"
+                    :src="item.url"
+                    :preview-src-list="srcList5"
+                  >
+                  </el-image>
+                </p>
+              </el-tab-pane>
+              <el-tab-pane label="基本作业信息" name="3">
+                <el-table
+                  :data="aqzs_base_work"
+                  border
+                  stripe
+                  fit
+                  highlight-current-row
+                  :row-style="{height:'5px'}"
+                  :cell-style="{padding:'5px 0'}"
+                >
+                  <el-table-column align="center" label="作业类型" width="80">
+                    <template slot-scope="scope"> {{ scope.row.workType }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业物名称" width="160">
+                    <template slot-scope="scope"> {{ scope.row.workObjectName}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业物类型" width="120">
+                    <template slot-scope="scope"> {{ scope.row.workObjectType }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业物来源" min-width="120">
+                    <template slot-scope="scope"> {{ scope.row.workObjectSource }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业物数量" width="120">
+                    <template slot-scope="scope"> {{ scope.row.workObjectAmount }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业开始日期" width="120">
+                    <template slot-scope="scope"> {{ scope.row.startDate.substr(0,10)}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业结束日期" width="120">
+                    <template slot-scope="scope"> {{ scope.row.endDate.substr(0,10)}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="天气状况" width="100">
+                    <template slot-scope="scope"> {{ scope.row.weather }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="作业图片" width="100">
+                    <template slot-scope="scope">
+                      <el-button
+                        size="small"
+                        type="success"
+                        icon="el-icon-view"
+                        @click="showPhoto(scope.row.workPictureList)"
+                        >查看</el-button
+                      >
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="生产作业信息" name="4">
+                <p class="product-info-item">收获方式: {{aqzs_harvest.harvestWay}}</p>
+                <p class="product-info-item">收获数量: {{aqzs_harvest.harvestAmountUnit}}</p>
+                <p class="product-info-item">收获时间: {{aqzs_harvest.harvestDate}}</p>
+                <p class="product-info-item">天气状况: {{aqzs_harvest.weather}}</p>
+                <p class="product-info-item">加工开始时间: {{aqzsProduct.startDate}}</p>
+                <p class="product-info-item">加工结束时间: {{aqzsProduct.endDate}}</p>
+                <p class="product-info-item">加工数量: {{aqzs_harvest.harvestAmount}}</p>
+                <p class="product-info-item">加工方式: {{aqzs_harvest.harvestWay}}</p>
+                <p class="product-info-item" style="height: 200px">
+                  采收图片:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl6"
+                    :src="item.url"
+                    :preview-src-list="srcList6"
+                  >
+                  </el-image>
+                </p>
+                <p class="product-info-item" style="height: 200px">
+                  加工图片:
+                  <el-image
+                    style="width: 200px; height: 160px; display: table-cell; vertical-align: middle; padding: 10px"
+                    v-for="item in imgUrl7"
+                    :src="item.url"
+                    :preview-src-list="srcList7"
+                  >
+                  </el-image>
+                </p>
+              </el-tab-pane>
+              <el-tab-pane label="检验信息" name="5">
+                <el-table
+                  :data="aqzsTest"
+                  border
+                  stripe
+                  fit
+                  highlight-current-row
+                  :row-style="{height:'5px'}"
+                  :cell-style="{padding:'5px 0'}"
+                >
+                  <el-table-column align="center" label="追溯码" width="200">
+                    <template slot-scope="scope"> {{ scope.row.productBatchNumber }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="检验数量" width="240">
+                    <template slot-scope="scope"> {{ scope.row.testAmount}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="检验日期" width="120">
+                    <template slot-scope="scope"> {{ scope.row.testDate.substr(0,10) }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="检验结果" width="100">
+                    <template slot-scope="scope">
+                      {{ scope.row.weather }}
+                      <el-tag type="success" v-if="scope.row.testResult === '合格'">合格</el-tag>
+                      <el-tag type="danger" v-else>不合格</el-tag>
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="检验图片" width="100">
+                    <template slot-scope="scope">
+                      <el-button
+                        size="small"
+                        type="success"
+                        icon="el-icon-view"
+                        @click="showInspectionPhoto(scope.row.testResultPictureList)"
+                        >查看</el-button
+                      >
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <el-tab-pane label="销售信息" name="6">
+                <el-table
+                  :data="aqzsSale"
+                  border
+                  stripe
+                  fit
+                  highlight-current-row
+                  :row-style="{height:'5px'}"
+                  :cell-style="{padding:'5px 0'}"
+                >
+                  <el-table-column align="center" label="订单编号" width="200">
+                    <template slot-scope="scope"> {{scope.row.orderNumber }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="销售数量" width="120">
+                    <template slot-scope="scope"> {{scope.row.saleAmount }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="销售商名称" width="120">
+                    <template slot-scope="scope"> {{ scope.row.sellerName}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="发货时间" width="120">
+                    <template slot-scope="scope"> {{ scope.row.sendDate}} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="发货人" width="100">
+                    <template slot-scope="scope"> {{scope.row.sender }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="收货人" width="100">
+                    <template slot-scope="scope"> {{scope.row.receiver }} </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="始发地" min-width="120">
+                    <template v-slot="scope">
+                      <span>{{ scope.row.startPlace}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" label="目的地" min-width="120">
+                    <template v-slot="scope">
+                      <span>{{scope.row.endPlace }}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+        </div>
+
+        <el-dialog
+          v-cloak
+          center
+          title="检验结果图片"
+          :visible.sync="dialogInspectionPictureVisible"
+          width="80%"
+          top="12vh"
+          :append-to-body="true"
+        >
+          <div class="upload-div" v-if="imgInspectionPictureLists.length !== 0">
+            <div class="upload-div-list" v-for="(item,index) of imgInspectionPictureLists" :key="index">
+              <el-image :src="baseImgUrl + item.url" :preview-src-list="testUrlList"></el-image>
+            </div>
+          </div>
+          <div v-else style="text-align: center; font-size: 24px">暂无</div>
+        </el-dialog>
+        <!-- 基本作业图片预览 -->
+        <el-dialog
+          v-cloak
+          center
+          title="基本作业图片"
+          :visible.sync="dialogOperationPictureVisible"
+          width="80%"
+          top="12vh"
+          :append-to-body="true"
+        >
+          <div class="upload-div" v-if="imgOperationPictureLists.length !== 0">
+            <div class="upload-div-list" v-for="(item,index) of imgOperationPictureLists" :key="index">
+              <el-image :src="baseImgUrl + item.url" :preview-src-list="srcList6"></el-image>
+            </div>
+          </div>
+          <div v-else style="text-align: center; font-size: 24px">暂无</div>
+        </el-dialog>
+
+        <!---------------------------------------------------------------- -->
+
+        <div class="link-section">
+          <div class="friendLink">
+            <h4>友情链接：</h4>
+            <ul class="clearfix">
+              <li><a href="http://www.aqsc.agri.cn/" target="_blank">中国农产品质量安全网</a></li>
+              <li><a href="http://www.agri.cn/" target="_blank">中国农业信息网</a></li>
+              <li><a href="http://www.greenfood.agri.cn/" target="_blank">中国绿色食品发展中心网站</a></li>
+              <li><a href="http://nyt.hubei.gov.cn/" target="_blank">湖北省农业农村厅网站</a></li>
+              <li><a href="http://nlj.yangling.gov.cn/" target="_blank">监利市人民政府网站</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer">
+    <a>主办单位：监利市农业农村局 &nbsp;&nbsp;</a>
+    <a>承办单位：武汉中迪联创科技有限公司&nbsp;&nbsp;</a>
+    <a>鄂ICP备 xxx号-1鄂公网安备 xxx号</a>
+  </footer>
+  <script src="../../assets/vue/vue.min.js"></script>
+  <script src="../../assets/element/index.js"></script>
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/api.js"></script>
+  <script>
+    var App = new Vue({
+      el: '#app',
+      data() {
+        return {
+          activeName: '1',
+          imgUrl: [],
+          srcList: [],
+          certificateUrl: [],
+          certificateList: [],
+          aqzsDetail: {},
+          aqzsProduct: {},
+          aqzsTest: {},
+          aqzsSale: {},
+          testUrlList: [],
+          code: '',
+          baseImgUrl: 'http://192.168.8.166:8897',
+          dialogInspectionPictureVisible: false,
+          dialogOperationPictureVisible: false,
+          imgInspectionPictureLists: [],
+          imgOperationPictureLists: [],
+          aqzs_base1: {},
+          aqzs_base2: {},
+          imgUrl2: [],
+          srcList2: [],
+          imgUrl3: [],
+          srcList3: [],
+          imgUrl4: [],
+          srcList4: [],
+          imgUrl5: [],
+          srcList5: [],
+          aqzs_base_work: {},
+          srcList6: [],
+          aqzs_harvest: {},
+          imgUrl6: [],
+          srcList6: [],
+          imgUrl7: [],
+          srcList7: [],
+        };
+      },
+      created() {
+        this.getRetrospectCode();
+      },
+      methods: {
+        handleClick(tab, event) {
+          // console.log(tab, event);
+        },
+        getRetrospectCode() {
+          let search = location.search;
+          this.code = search.substr(1);
+          let params = { productBatchNumber: this.code };
+          $.ajax({
+            url: 'http://192.168.8.166:8899/ProcessBatch/traceByPBN',
+            data: params,
+            type: 'GET',
+            // async: false,
+            // contentType: contentType,
+            // async: true,
+            success: (res) => {
+              console.log(res);
+              if (res.status == 200) {
+                this.aqzsDetail = res.data.aqzs_product_detail;
+                this.aqzsProduct = res.data.aqzs_product;
+                this.imgUrl = res.data.aqzs_product_detail.pictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_product_detail.pictureList.map((item) => {
+                  this.srcList.push(this.baseImgUrl + item.url);
+                });
+                this.certificateUrl = res.data.aqzs_product_detail.certificateList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_product_detail.certificateList.map((item) => {
+                  this.certificateList.push(this.baseImgUrl + item.url);
+                });
+                this.aqzsTest = res.data.aqzs_finish_product_test;
+                this.aqzsSale = res.data.aqzs_sale;
+                this.aqzs_base1 = res.data.aqzs_base1;
+                this.aqzs_base2 = res.data.aqzs_base2;
+                this.imgUrl2 = res.data.aqzs_base1.basePictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_base1.basePictureList.map((item) => {
+                  this.srcList2.push(this.baseImgUrl + item.url);
+                });
+                this.imgUrl3 = res.data.aqzs_base1.reportPictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_base1.reportPictureList.map((item) => {
+                  this.srcList3.push(this.baseImgUrl + item.url);
+                });
+                this.imgUrl4 = res.data.aqzs_base2.basePictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_base2.basePictureList.map((item) => {
+                  this.srcList4.push(this.baseImgUrl + item.url);
+                });
+                this.imgUrl5 = res.data.aqzs_base2.reportPictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_base2.reportPictureList.map((item) => {
+                  this.srcList5.push(this.baseImgUrl + item.url);
+                });
+                this.aqzs_base_work = res.data.aqzs_base_work;
+                this.aqzs_harvest = res.data.aqzs_harvest;
+                 this.imgUrl6 = res.data.aqzs_harvest.harvestPictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_harvest.harvestPictureList.map((item) => {
+                  this.srcList6.push(this.baseImgUrl + item.url);
+                });
+                 this.imgUrl7 = res.data.aqzs_process_batch.productBatchNumberPictureList.map((item) => {
+                  return {
+                    url: this.baseImgUrl + item.url,
+                  };
+                });
+                res.data.aqzs_process_batch.productBatchNumberPictureList.map((item) => {
+                  this.srcList7.push(this.baseImgUrl + item.url);
+                });
+              }
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        },
+        // 查看检验结果图片
+        showInspectionPhoto(row) {
+          console.log(row);
+          this.testUrlList = [];
+          this.imgInspectionPictureLists = [];
+          if (row.length !== 0) {
+            this.imgInspectionPictureLists = row;
+            for (let i = 0; i < this.imgInspectionPictureLists.length; i++) {
+              this.testUrlList.push(this.baseImgUrl + this.imgInspectionPictureLists[i].url);
+            }
+          }
+          this.dialogInspectionPictureVisible = true;
+        },
+        showPhoto(row) {
+          this.srcList6 = [];
+          this.imgOperationPictureLists = [];
+          if (row.length !== 0) {
+            this.imgOperationPictureLists = row;
+            for (let i = 0; i < this.imgOperationPictureLists.length; i++) {
+              this.srcList6.push(this.baseImgUrl + this.imgOperationPictureLists[i].url);
+            }
+          }
+          this.dialogOperationPictureVisible = true;
+        },
+      },
+    });
+  </script>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="referrer" content="no-referrer">
+    <title>农业新闻</title>
+    <link rel="stylesheet" href="../../css/reset.css"/>
+    <link rel="stylesheet" href="../../css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/page.css" media="screen">
+
+    <style>
+        .imgSize {
+            height: 100px;
+            width: 100px;
+        }
+
+        .auth-left-box {
+            margin-left: 45px;
+        }
+
+        .auth {
+            margin-top: 10px;
+            float: left;
+            width: 117px;
+          cursor: pointer;
+        }
+
+        .auth a {
+            display: block;
+            text-align: center;
+            font-size: 15px;
+            color: black;
+        }
+
+        .auth a:hover {
+            display: block;
+            text-align: center;
+            font-size: 15px;
+            color: #54ffe4;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="banner"></div>
+
+<div class="title-container">
+    <img
+            class="system-logo"
+            src="https://cn.vuejs.org/images/logo.png"
+            alt="img"
+    />
+    <h1 class="system-title">监利市农产品质量安全追溯信息系统</h1>
+    <div class="search-section">
+        <input
+                class="search-input"
+                type="text"
+                placeholder="请输入搜索内容..."
+        />
+        <button class="search-btn">搜索</button>
+    </div>
+</div>
+
+<div class="mainer">
+    <div class="nav-list">
+        <a class="nav-item" href="../../index.html">首页</a>
+        <a class="nav-item" href="../farm-news/farm-news.html">农业新闻</a>
+        <a class="nav-item" href="../laws-regulations/laws-regulations.html">政策法规</a>
+        <a class="nav-item" href="../work-trend/work-trend.html">工作动态</a>
+        <a class="nav-item active" href="../farm-products/farm-products.html">特色农产品</a>
+        <a class="nav-item" href="../company-show/company-show.html">企业名录</a>
+        <a class="nav-item" href="../supervision-admin/supervision-admin.html">监督管理</a>
+        <a class="nav-item" href="../supervision-organ/supervision-organ.html">监督机构</a>
+        <a class="nav-item" href="../suggest/suggest.html">投诉建议</a>
+    </div>
+
+    <!---------------------------------------------------------------- -->
+
+    <div class="main-content">
+        <div class="main-content-left">
+            <p class="farm-products-title">特色农产品</p>
+            <p class="farm-products-title" id="allProduct">三品一标认证</p>
+            <div class="auth-left-box">
+                <div class="auth" data-name="无公害">
+                    <img class="imgSize" src="./../../images/a1.jpg" title="无公害食品产品">
+                    <a href="###">无公害食品产品认证</a>
+                </div>
+                <div class="auth" data-name="绿色">
+                    <img class="imgSize" src="./../../images/a2.jpg" title="绿色食品产品认证">
+                    <a>绿色食品产品认证</a>
+                </div>
+                <div class="auth" data-name="有机">
+                    <img class="imgSize" src="./../../images/a3.jpg" title="有机食品产品认证">
+                    <a>有机食品产品认证</a>
+                </div>
+                <div class="auth" data-name="地理标志">
+                    <img class="imgSize" src="./../../images/a4.jpg" title="农产品地理标志">
+                    <a>农产品地理标志</a>
+                </div>
+            </div>
+            <!--<div class="sign-logo-item">
+                &lt;!&ndash;                <img src="../../images/rz.png" alt="img">&ndash;&gt;
+            </div>-->
+        </div>
+        <div class="main-content-right">
+            <div class="news-top-nav">
+                <span>当前位置：</span>
+                <a class="news-top-nav-item" href="../../index.html">首页 ></a>
+                <a class="news-top-nav-item active" href="javascript:;">特色农产品</a>
+            </div>
+            <div class="product-display" id="productDisplay">
+                <a class="product-item" href="../../html/farm-products/products-deatil.html">
+                    <div class="product-img">
+                        <img src="../../images/product-1.png" alt="img">
+                    </div>
+                    <span class="product-item-name">茶叶</span>
+                </a>
+                <a class="product-item">
+                    <div class="product-img">
+                        <img src="http://192.168.8.133:8766/UploadFile/infoImg/4bca474ac9a54e22ba74bfdd5eb1994f.jpg"
+                             alt="img">
+                    </div>
+                    <span class="product-item-name">茶叶</span>
+                </a>
+                <a class="product-item">
+                    <div class="product-img">
+                        <img src="http://h.bytravel.cn/shop/head2/38623.gif" alt="img">
+                    </div>
+                    <span class="product-item-name">茶叶</span>
+                </a>
+                <a class="product-item">
+                    <div class="product-img">
+                        <img src="../../images/product-1.png" alt="img">
+                    </div>
+                    <span class="product-item-name">茶叶</span>
+                </a>
+                <a class="product-item">
+                    <div class="product-img">
+                        <img src="../../images/product-1.png" alt="img">
+                    </div>
+                    <span class="product-item-name">茶叶</span>
+                </a>
+            </div>
+            <div class="pagination">
+                <!--最多显示页面项   每页显示个数-->
+                <ul class="page" maxshowpageitem="5" pagelistcount="9" id="page"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------------------------------------------- -->
+
+    <div class="link-section">
+        <div class="friendLink">
+            <h4>友情链接：</h4>
+            <ul class="clearfix">
+                <li><a href="http://www.aqsc.agri.cn/" target="_blank">中国农产品质量安全网</a></li>
+                <li><a href="http://www.agri.cn/" target="_blank">中国农业信息网</a></li>
+                <li><a href="http://www.greenfood.agri.cn/" target="_blank">中国绿色食品发展中心网站</a></li>
+                <li><a href="http://nyt.hubei.gov.cn/" target="_blank">湖北省农业农村厅网站</a></li>
+                <li><a href="http://nlj.yangling.gov.cn/" target="_blank">监利市人民政府网站</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="./../../js/jquery.min.js" type="text/javascript"></script>
+<script src="./../../js/page.js" type="text/javascript"></script>
+<script src="./../../js/api.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    //搜索按钮
+    $(".search-btn").click(function () {
+        let val = $(".search-input").val();
+        location.href = "./../search/commonArticleList.html?" + val
+    });
+
+    //获取自定义属性值
+    $(".auth").click(function () {
+        param.authType = $(this).attr("data-name");
+        loadNewByPage(param, htmlContent, true);
+    });
+    //获取所有
+
+    let param = {
+        page: 1,
+        size: 9,
+    };
+    let total;
+    let htmlContent = "productDisplay";
+
+    let GG = {
+        "kk": function (page) {
+            param = {
+                page: page,
+                size: 9,
+            };
+            loadNewByPage(param, htmlContent);
+        }
+    };
+
+    //初始化
+    loadNewByPage(param, htmlContent, true);
+
+    var img = "../../images/product-1.png";
+
+    function loadNewByPage(param, htmlContent, init) {
+        doApi(function (res) {
+            if (res.status === 200) {
+                console.log(res);
+                if (init) {
+                    //总数量，当前页，点击回调方法
+                    $("#page").initPage(res.data.total, 1, GG.kk);
+                }
+                console.log(res);
+                var workDynamicHtml = "";
+                for (let i = 0; i < res.data.rows.length; i++) {
+                    // let split = res.data.rows[i].pub_time.substring(0,11);
+                    //处理图片
+                    if (res.data.rows[i].imgLists.length != 0) {
+                        img = "http://" + res.data.rows[i].imgLists[0].path
+                    } else {
+                        img = "../../images/default.jpg";
+                    }
+                    workDynamicHtml += "<a class=\"product-item\" href=\"./products-deatil.html?" + res.data.rows[i].id + "\">\n" +
+                        "              <div class=\"product-img\">\n" +
+                        "                <img src=\" " + img + " \" alt=\"img\">\n" +
+                        "              </div>\n" +
+                        "              <span class=\"product-item-name\">" + res.data.rows[i].name + "</span>\n" +
+                        "            </a>"
+                }
+                // $("#workDynamic").html(workDynamicHtml)
+                $("#" + htmlContent).html(workDynamicHtml)
+            }
+        }, function (err) {
+            console.log(err);
+        }, null, "/product/all", "get", param, null)
+    }
+</script>
+
+</body>
+<footer class="footer">
+    <a>主办单位：监利市农业农村局 &nbsp;&nbsp;</a>
+    <a>承办单位：武汉中迪联创科技有限公司&nbsp;&nbsp;</a>
+    <a>鄂ICP备 xxx号-1鄂公网安备 xxx号</a>
+</footer>
+</html>
