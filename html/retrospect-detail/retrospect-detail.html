@@ -12,7 +12,6 @@
       <div class="banner"></div>
 
       <div class="title-container">
-        <img class="system-logo" src="https://cn.vuejs.org/images/logo.png" alt="img" />
         <h1 class="system-title">监利市农产品质量安全追溯信息系统</h1>
         <div class="search-section">
           <input class="search-input" type="text" placeholder="请输入搜索内容..." />
@@ -102,7 +101,7 @@
                 </p>
               </el-tab-pane>
               <el-tab-pane label="基地信息" name="2">
-                <p class="product-info-item">种植基地名称:: {{aqzs_base1.name}}</p>
+                <p class="product-info-item">种植基地名称: {{aqzs_base1.name}}</p>
                 <p class="product-info-item">种植基地位置: {{aqzs_base1.address}}</p>
                 <p class="product-info-item">种植基地面积/规模(亩): {{aqzs_base1.area}}</p>
                 <p class="product-info-item">种植环境检验结果: {{aqzs_base1.isReportQualified}}</p>
@@ -367,8 +366,10 @@
     </div>
   </body>
   <footer class="footer">
-    <a>主办单位：监利市农业农村局 &nbsp;&nbsp;</a>
-    <a>承办单位：武汉中迪联创科技有限公司&nbsp;&nbsp;</a>
+    <a href="http://www.jianli.gov.cn/xxgk_30/xxgkml/jgzn/201912/t20191215_427946.shtml"
+      >主办单位：监利市农业农村局 &nbsp;&nbsp;</a
+    ><!-- Winston 2020 -->
+    <a href="http://www.zd-tech.net/">承办单位：武汉中迪联创科技有限公司&nbsp;&nbsp;</a>
     <a>鄂ICP备 xxx号-1鄂公网安备 xxx号</a>
   </footer>
   <script src="../../assets/vue/vue.min.js"></script>
@@ -438,76 +439,79 @@
               if (res.status == 200) {
                 this.aqzsDetail = res.data.aqzs_product_detail;
                 this.aqzsProduct = res.data.aqzs_product;
-                this.imgUrl = res.data.aqzs_product_detail.pictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_product_detail.pictureList.map((item) => {
-                  this.srcList.push(this.baseImgUrl + item.url);
-                });
-                this.certificateUrl = res.data.aqzs_product_detail.certificateList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_product_detail.certificateList.map((item) => {
-                  this.certificateList.push(this.baseImgUrl + item.url);
-                });
+                if (res.data.aqzs_product_detail.pictureList) {
+                  this.imgUrl = res.data.aqzs_product_detail.pictureList.map((item) => {
+                    this.srcList.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+
+                if (res.data.aqzs_product_detail.certificateList) {
+                  this.certificateUrl = res.data.aqzs_product_detail.certificateList.map((item) => {
+                    this.certificateList.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+
                 this.aqzsTest = res.data.aqzs_finish_product_test;
                 this.aqzsSale = res.data.aqzs_sale;
                 this.aqzs_base1 = res.data.aqzs_base1;
                 this.aqzs_base2 = res.data.aqzs_base2;
-                this.imgUrl2 = res.data.aqzs_base1.basePictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_base1.basePictureList.map((item) => {
-                  this.srcList2.push(this.baseImgUrl + item.url);
-                });
-                this.imgUrl3 = res.data.aqzs_base1.reportPictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_base1.reportPictureList.map((item) => {
-                  this.srcList3.push(this.baseImgUrl + item.url);
-                });
-                this.imgUrl4 = res.data.aqzs_base2.basePictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_base2.basePictureList.map((item) => {
-                  this.srcList4.push(this.baseImgUrl + item.url);
-                });
-                this.imgUrl5 = res.data.aqzs_base2.reportPictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_base2.reportPictureList.map((item) => {
-                  this.srcList5.push(this.baseImgUrl + item.url);
-                });
+                if (res.data.aqzs_base1.basePictureList) {
+                  this.imgUrl2 = res.data.aqzs_base1.basePictureList.map((item) => {
+                    this.srcList2.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+                if (res.data.aqzs_base1.reportPictureList) {
+                  this.imgUrl3 = res.data.aqzs_base1.reportPictureList.map((item) => {
+                    this.srcList3.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+                if (res.data.aqzs_base2.basePictureList) {
+                  this.imgUrl4 = res.data.aqzs_base2.basePictureList.map((item) => {
+                    this.srcList4.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+                if (res.data.aqzs_base2.reportPictureList) {
+                  this.imgUrl5 = res.data.aqzs_base2.reportPictureList.map((item) => {
+                    this.srcList5.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+
                 this.aqzs_base_work = res.data.aqzs_base_work;
                 this.aqzs_harvest = res.data.aqzs_harvest;
-                 this.imgUrl6 = res.data.aqzs_harvest.harvestPictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_harvest.harvestPictureList.map((item) => {
-                  this.srcList6.push(this.baseImgUrl + item.url);
-                });
-                 this.imgUrl7 = res.data.aqzs_process_batch.productBatchNumberPictureList.map((item) => {
-                  return {
-                    url: this.baseImgUrl + item.url,
-                  };
-                });
-                res.data.aqzs_process_batch.productBatchNumberPictureList.map((item) => {
-                  this.srcList7.push(this.baseImgUrl + item.url);
-                });
+                if (res.data.aqzs_harvest.harvestPictureList) {
+                  this.imgUrl6 = res.data.aqzs_harvest.harvestPictureList.map((item) => {
+                    this.srcList6.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
+                if (res.data.aqzs_process_batch.productBatchNumberPictureList) {
+                  this.imgUrl7 = res.data.aqzs_process_batch.productBatchNumberPictureList.map((item) => {
+                    this.srcList7.push(this.baseImgUrl + item.url);
+                    return {
+                      url: this.baseImgUrl + item.url,
+                    };
+                  });
+                }
               }
             },
             error: function (err) {

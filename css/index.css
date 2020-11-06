@@ -12,7 +12,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 573px;
+  height: 545px;
   min-width: 1000px;
   z-index: -10;
   zoom: 1;
@@ -21,7 +21,8 @@
   background-size: cover;
   -webkit-background-size: cover;
   -o-background-size: cover;
-  background-position: center 0;
+  /* background-position: center 0; */
+  /* background-position: 100% 0; */
 }
 
 .title-container {
@@ -41,7 +42,7 @@
 
 .system-title {
   flex: 3;
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 600;
   margin-left: 30px;
 }
@@ -89,27 +90,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
 }
 
 .nav-item {
-  width: 120px;
+  width: 130px;
   height: 60px;
+  font-weight: 600;
   line-height: 60px;
   color: #fff;
-  font-size: 18px;
+  font-size: 19px;
   text-align: center;
 }
 
 /* 点击导航标签的效果 */
 .nav-item.active {
-  background-color: #0e8841;
-  border-bottom: 3px solid#257000;
+  background-color: #fff;
+  color: #25ac5d;
+  /* border-bottom: 3px solid#257000; */
+  border-top: 1px solid#25ac5d;
 }
 
 .nav-item:hover {
-  background-color: #0e8841;
-  border-bottom: 3px solid#257000;
+  background-color: #fff;
+  color: #25ac5d;
+  /* border-bottom: 3px solid#257000; */
+  border-top: 1px solid#25ac5d;
 }
 
 .info-section {
@@ -360,7 +366,8 @@
   border: none;
   height: 45px;
   font-size: 16px;
-  padding-left: 5px;
+  padding-left: 10px;
+  border-radius: 5px;
 }
 
 .track-search-button {
@@ -449,11 +456,11 @@
 }
 
 .farming-news {
-  width: 600px;
+  width: 670px;
 }
 
 .farming-news-top {
-  width: 570px;
+  width: 640px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -607,6 +614,10 @@
   color: #999;
 }
 
+.footer a{
+  color: #888;
+}
+
 /* ---------------------------------------------------- */
 
 /* farm-news样式 */
@@ -635,7 +646,7 @@
 }
 
 .main-content-right {
-  width: 840px;
+  width: 950px;
   margin: 0 auto;
 }
 
@@ -697,7 +708,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 9;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   cursor: pointer;
   color: black;
@@ -731,7 +742,7 @@
 }*/
 
 .pagination {
-  font-size: 20px;
+  font-size: 12px;
   height: 50px;
   text-align: center;
   line-height: 30px;
@@ -775,7 +786,7 @@
 }
 
 .article-text {
-  font-size: 20px;
+  font-size: 16px;
   margin-top: 20px;
   line-height: 30px;
   padding: 10px;
@@ -926,6 +937,15 @@
   text-align: center;
   line-height: 60px;
 }
+.main-content-left-tag{
+  font-size: 20px;
+  width: 260px;
+  height: 60px;
+  color: #999;
+  margin: 20px auto;
+  text-align: center;
+  line-height: 60px;
+}
 
 .company-item {
   display: flex;
@@ -935,6 +955,7 @@
   width: 100%;
   height: 200px;
   color: #000;
+  border-bottom: 1px solid#ccc;
 }
 
 .company-img {
@@ -955,7 +976,7 @@
 
 .company-info {
   margin-left: 30px;
-  width: 520px;
+  width: 700px;
   height: 190px;
 }
 
@@ -966,6 +987,7 @@
 }
 
 .company-info-text span {
+  line-height: 20px;
   margin-top: 10px;
   font-size: 14px;
   font-weight: normal;
@@ -986,6 +1008,7 @@
 
 .company-info-title {
   font-size: 25px;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -1004,14 +1027,15 @@
   border-collapse: collapse;
   background: #ccc;
   width: 600px;
-  height: 286px;
+  height: 300px;
   float: left;
-  margin-top: 20px;
 }
 
 .authentication_info tr td {
+  font-size: 12px;
   border: 1px solid #ccc;
   padding: 10px;
+  line-height: 16px;
 }
 
 /* -------------------------------------------------- */
@@ -1166,22 +1190,22 @@
   height: 100px;
 }
 
-.product-retrospect-info-text{
+.product-retrospect-info-text {
   margin-left: 30px;
 }
 
-.product-retrospect-info-text p{
+.product-retrospect-info-text p {
   font-size: 18px;
   color: #666;
   line-height: 25px;
 }
 
-.product-retrospect-tabs{
+.product-retrospect-tabs {
   width: 1100px;
   margin: auto;
 }
 
-.product-info-item{
+.product-info-item {
   height: 40px;
   font-size: 14px;
   line-height: 40px;
@@ -1192,36 +1216,36 @@
 /* 图片展示样式 */
 .upload-div {
   display: flex;
-	justify-content: space-evenly;
-	flex-wrap: wrap;
-	margin-top: 10px;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .upload-div .upload-div-list {
   width: 400px;
-	height: 280px;
-	margin: 8px 0;
+  height: 280px;
+  margin: 8px 0;
 }
 
 .upload-div .upload-div-list .upload-div-top {
   position: relative;
-	width: 100%;
-	height: 30px;
-	background-color: rgba(0, 0, 0, .2);
+  width: 100%;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .upload-div .upload-div-list .upload-div-top .upload-div-del {
   position: absolute;
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	cursor: pointer;
-	line-height: 30px;
-	right: 0;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  cursor: pointer;
+  line-height: 30px;
+  right: 0;
 }
 
 .upload-div .upload-div-list .el-image {
   width: 400px;
-	height: 250px;
+  height: 250px;
 }
