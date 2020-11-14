@@ -614,7 +614,7 @@
   color: #999;
 }
 
-.footer a{
+.footer a {
   color: #888;
 }
 
@@ -937,7 +937,7 @@
   text-align: center;
   line-height: 60px;
 }
-.main-content-left-tag{
+.main-content-left-tag {
   font-size: 20px;
   width: 260px;
   height: 60px;
@@ -1167,12 +1167,6 @@
   padding: 20px;
 }
 
-.product-retrospect-code {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
 .product-retrospect-info {
   display: flex;
   justify-content: start;
@@ -1181,13 +1175,13 @@
 
 .product-retrospect-info-img {
   width: 150px;
-  height: 100px;
+  height: 150px;
   border: 1px solid #ededed;
 }
 
 .product-retrospect-info-img img {
   width: 150px;
-  height: 100px;
+  height: 150px;
 }
 
 .product-retrospect-info-text {
@@ -1197,7 +1191,7 @@
 .product-retrospect-info-text p {
   font-size: 18px;
   color: #666;
-  line-height: 25px;
+  line-height: 30px;
 }
 
 .product-retrospect-tabs {
