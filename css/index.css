@@ -907,6 +907,7 @@
 
 .product-info-text-item span {
   font-size: 14px;
+  line-height: 20px;
   font-weight: normal;
 }
 
@@ -1242,4 +1243,14 @@
 .upload-div .upload-div-list .el-image {
   width: 400px;
   height: 250px;
+}
+
+.img-item-size {
+  height: 200px;
+  width: 260px;
+}
+
+.auth-item {
+  margin-top: 20px;
+  text-align: center;
 }

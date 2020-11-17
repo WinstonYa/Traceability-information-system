@@ -36,6 +36,17 @@
       <div class="main-content">
         <div class="main-content-left">
           <p class="main-content-left-text">农业新闻</p>
+          <div class="auth-left">
+            <div class="auth-item">
+              <img class="img-item-size" src="./../../images/farm-pic.png" />
+            </div>
+            <div class="auth-item">
+              <img class="img-item-size" src="./../../images/farm-pic2.jpg" />
+            </div>
+            <div class="auth-item">
+              <img class="img-item-size" src="./../../images/farm-pic3.jpg" />
+            </div>
+          </div>
         </div>
         <div class="main-content-right">
           <div class="news-top-nav">
@@ -119,12 +130,10 @@
           function (res) {
             if (res.status === 200) {
               total = res.data.total;
-              console.log(res);
               if (init) {
                 //总数量，当前页，点击回调方法
                 $('#page').initPage(total, 1, GG.kk);
               }
-              console.log(res);
               var workDynamicHtml = '';
               for (let i = 0; i < res.data.rows.length; i++) {
                 let split = res.data.rows[i].pub_time.substring(0, 11);

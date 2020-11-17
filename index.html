@@ -130,7 +130,7 @@
         <div class="track-search">
           <div class="ims-entrance">
             <img src="./images/ims-entrance.png" alt="img" />
-            <a href="./html/retrospect-detail/mobile-retrospect.html"> <span>追溯平台入口</span></a>
+            <a> <span>追溯平台入口</span></a>
             <img class="right-arrows" src="./images/right.png" alt="img" />
             <img class="right-arrows-hover" src="./images/right_hover.png" alt="img" />
           </div>
@@ -384,7 +384,7 @@
         let params = { productBatchNumber: val };
         if (val.trim() !== '') {
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/zsSys/ProcessBatch/traceByPBN',
+            url: data.ip_3 + '/api/zsSys/ProcessBatch/traceByPBN',
             data: params,
             type: 'GET',
             // async: true,

@@ -127,7 +127,9 @@
                 <van-cell title="作业物名称">{{item.workObjectName}}</van-cell>
                 <van-cell title="作业物类型">{{item.workObjectType}}</van-cell>
                 <van-cell title="作业物来源">{{item.workObjectSource}}</van-cell>
-                <van-cell title="作业物数量">{{item.workObjectAmount + getDictionaryName2(item.workObjectAmountUnit)}}</van-cell>
+                <van-cell title="作业物数量"
+                  >{{item.workObjectAmount + getDictionaryName2(item.workObjectAmountUnit)}}</van-cell
+                >
                 <van-cell title="作业开始日期">{{item.startDate.substr(0,10)}}</van-cell>
                 <van-cell title="作业结束日期">{{item.endDate.substr(0,10)}}</van-cell>
                 <van-cell title="天气状况">{{item.weather}}</van-cell>
@@ -201,8 +203,8 @@
             <van-tabs>
               <van-tab v-for="(item,index) in aqzsSale" :title="item.orderNumber">
                 <van-cell title="订单编号">{{item.orderNumber}}</van-cell>
-                <van-cell title="销售数量">{{item.saleAmount}}</van-cell>
-                <van-cell title="销售商名称">{{item.sellerName}}</van-cell>
+                <van-cell title="销售数量">{{item.saleAmount + getDictionaryName2(item.saleAmountUnit)}}</van-cell>
+                <van-cell title="销售商名称">{{getName(item.sellerId)}}</van-cell>
                 <van-cell title="发货时间">{{item.sendDate.substr(0,10)}}</van-cell>
                 <van-cell title="发货人">{{item.sender}}</van-cell>
                 <van-cell title="收货人">{{item.receiver}}</van-cell>
@@ -227,7 +229,7 @@
           activeName: '1',
           activeNames2: '1',
           code: '',
-          baseImgUrl: 'http://192.168.8.166:8897',
+          baseImgUrl: data.ip_2,
           aqzsProduct: {},
           aqzsDetail: {},
           imgUrl: [],
@@ -255,12 +257,12 @@
           amountUnitOptions: [],
           aqzs_process_batch: {},
           baseOperationOptions: [],
+          retailerOptions: [],
         };
       },
       created() {
         this.getRetrospectCode();
         this.getAmountUnitDictionary();
-        this.getBaseOperationDictionary();
       },
       methods: {
         getRetrospectCode() {
@@ -268,11 +270,10 @@
           this.code = search.substr(1);
           let params = { productBatchNumber: this.code };
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/zsSys/ProcessBatch/traceByPBN',
+            url: data.ip_3 + '/api/zsSys/ProcessBatch/traceByPBN',
             data: params,
             type: 'GET',
             success: (res) => {
-              console.log(res);
               if (res.status == 200) {
                 this.aqzsProduct = res.data.aqzs_product;
                 this.aqzsDetail = res.data.aqzs_product_detail;
@@ -353,23 +354,49 @@
                 this.aqzsSale = res.data.aqzs_sale;
                 this.aqzs_process_batch = res.data.aqzs_process_batch;
               }
+              this.getRetailerDictionary();
+              this.getBaseOperationDictionary();
             },
             error: function (err) {
               console.log(err);
             },
           });
         },
+        getRetailerDictionary() {
+          $.ajax({
+            url: data.ip_3 + '/api/zsSys/Seller/pageByEId',
+            data: { enterpriseId: this.aqzs_base1.enterpriseId },
+            type: 'GET',
+            success: (res) => {
+              if (res.status !== 200) {
+                return vant.Notify({ type: 'danger', message: '获取失败' });
+              }
+              this.retailerOptions = res.data.rows;
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        },
+        // 根据id获取name
+        getName(id) {
+          for (let i = 0; i < this.retailerOptions.length; i++) {
+            if (id === this.retailerOptions[i].id) {
+              return this.retailerOptions[i].name;
+            }
+          }
+        },
         handleCheckInfo(value) {
           vant.Dialog({ title: '商品介绍', message: value });
         },
         getAmountUnitDictionary() {
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/comSys/DataDictionary/getAllMayToCondition',
+            url: data.ip_3 + '/api/comSys/DataDictionary/getAllMayToCondition',
             data: { type: '数量单位' },
             type: 'GET',
             success: (res) => {
               if (res.status !== 200) {
-                return vant.Notify({ type: 'danger', message: '通知内容' });
+                return vant.Notify({ type: 'danger', message: '获取失败' });
               }
               this.amountUnitOptions = res.data;
             },
@@ -380,15 +407,15 @@
         },
         getBaseOperationDictionary() {
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/comSys/DataDictionary/getAllMayToCondition',
+            url: data.ip_3 + '/api/comSys/DataDictionary/getAllMayToCondition',
             data: {
-              type: '种植作业类型',
+              type: this.aqzs_base1.baseType === '种植基地' ? '种植作业类型' : '水产作业类型',
               remark: 'X2',
             },
             type: 'GET',
             success: (res) => {
               if (res.status !== 200) {
-                return vant.Notify({ type: 'danger', message: '通知内容' });
+                return vant.Notify({ type: 'danger', message: '获取失败' });
               }
               this.baseOperationOptions = res.data;
             },

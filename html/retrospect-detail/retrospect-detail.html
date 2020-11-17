@@ -249,7 +249,7 @@
                   :row-style="{height:'5px'}"
                   :cell-style="{padding:'5px 0'}"
                 >
-                  <el-table-column align="center" label="追溯码" width="200">
+                  <el-table-column align="center" label="追溯码" min-width="200">
                     <template slot-scope="scope"> {{ scope.row.productBatchNumber }} </template>
                   </el-table-column>
                   <el-table-column align="center" label="检验数量" width="240">
@@ -294,10 +294,12 @@
                     <template slot-scope="scope"> {{scope.row.orderNumber }} </template>
                   </el-table-column>
                   <el-table-column align="center" label="销售数量" width="120">
-                    <template slot-scope="scope"> {{scope.row.saleAmount }} </template>
+                    <template slot-scope="scope">
+                      {{scope.row.saleAmount + getDictionaryName2(scope.row.saleAmountUnit)}}
+                    </template>
                   </el-table-column>
                   <el-table-column align="center" label="销售商名称" width="120">
-                    <template slot-scope="scope"> {{ scope.row.sellerName}} </template>
+                    <template slot-scope="scope"> {{ getName(scope.row.sellerId) }} </template>
                   </el-table-column>
                   <el-table-column align="center" label="发货时间" width="120">
                     <template slot-scope="scope"> {{ scope.row.sendDate.substr(0,10)}} </template>
@@ -402,7 +404,7 @@
           aqzsSale: {},
           testUrlList: [],
           code: '',
-          baseImgUrl: 'http://192.168.8.166:8897',
+          baseImgUrl: data.ip_2,
           dialogInspectionPictureVisible: false,
           dialogOperationPictureVisible: false,
           imgInspectionPictureLists: [],
@@ -427,12 +429,12 @@
           amountUnitOptions: [],
           aqzs_process_batch: {},
           baseOperationOptions: [],
+          retailerOptions: [],
         };
       },
       created() {
         this.getRetrospectCode();
         this.getAmountUnitDictionary();
-        this.getBaseOperationDictionary();
       },
       methods: {
         handleClick(tab, event) {
@@ -443,13 +445,12 @@
           this.code = search.substr(1);
           let params = { productBatchNumber: this.code };
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/zsSys/ProcessBatch/traceByPBN',
+            url: data.ip_3 + '/api/zsSys/ProcessBatch/traceByPBN',
             data: params,
             type: 'GET',
             // async: false,
             // contentType: contentType,
             success: (res) => {
-              console.log(res);
               if (res.status == 200) {
                 this.aqzsDetail = res.data.aqzs_product_detail;
                 this.aqzsProduct = res.data.aqzs_product;
@@ -530,15 +531,32 @@
                   });
                 }
               }
+              this.getRetailerDictionary();
+              this.getBaseOperationDictionary();
             },
             error: function (err) {
               console.log(err);
             },
           });
         },
+        getRetailerDictionary() {
+          $.ajax({
+            url: data.ip_3 + '/api/zsSys/Seller/pageByEId',
+            data: { enterpriseId: this.aqzs_base1.enterpriseId },
+            type: 'GET',
+            success: (res) => {
+              if (res.status !== 200) {
+                return this.$message.error('获取失败');
+              }
+              this.retailerOptions = res.data.rows;
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        },
         // 查看检验结果图片
         showInspectionPhoto(row) {
-          console.log(row);
           this.testUrlList = [];
           this.imgInspectionPictureLists = [];
           if (row.length !== 0) {
@@ -562,12 +580,12 @@
         },
         getAmountUnitDictionary() {
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/comSys/DataDictionary/getAllMayToCondition',
+            url: data.ip_3 + '/api/comSys/DataDictionary/getAllMayToCondition',
             data: { type: '数量单位' },
             type: 'GET',
             success: (res) => {
               if (res.status !== 200) {
-                return vant.Notify({ type: 'danger', message: '通知内容' });
+                return this.$message.error('获取失败');
               }
               this.amountUnitOptions = res.data;
             },
@@ -576,17 +594,26 @@
             },
           });
         },
+        // 根据id获取name
+        getName(id) {
+          for (let i = 0; i < this.retailerOptions.length; i++) {
+            if (id === this.retailerOptions[i].id) {
+              return this.retailerOptions[i].name;
+            }
+          }
+        },
         getBaseOperationDictionary() {
+          console.log(this.aqzs_base1.baseType);
           $.ajax({
-            url: 'http://192.168.8.166:8765/api/comSys/DataDictionary/getAllMayToCondition',
+            url: data.ip_3 + '/api/comSys/DataDictionary/getAllMayToCondition',
             data: {
-              type: '种植作业类型',
+              type: this.aqzs_base1.baseType === '种植基地' ? '种植作业类型' : '水产作业类型',
               remark: 'X2',
             },
             type: 'GET',
             success: (res) => {
               if (res.status !== 200) {
-                return vant.Notify({ type: 'danger', message: '通知内容' });
+                return this.$message.error('获取失败');
               }
               this.baseOperationOptions = res.data;
             },
